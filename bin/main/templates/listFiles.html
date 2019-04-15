@@ -8,12 +8,8 @@
             <dl th:each="file : ${files}">
                   <dt class="bookHeadline">
                         <span th:text="${file.nome}"> FILE_ </span>
-  
+  						<a href="${actualDir}">Download</a>
                   </dt>
-                  <dd class="fileDescription">
-                        <span th:if="${file.description}" th:text="${file.description}">Description</span>
-                        <span th:if="${file.description eq null}"> Nenhuma descricao foi adicionada para esse file!</span>
-                  </dd>
             </dl>
       </div>
       <div th:unless="${#lists.isEmpty(dirs)}">
