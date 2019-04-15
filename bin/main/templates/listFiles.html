@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>Reading List</title>
+</head>
+<body>
+      <h2>Lista de files</h2>
+      <div th:unless="${#lists.isEmpty(files)}">
+            <dl th:each="file : ${files}">
+                  <dt class="bookHeadline">
+                        <span th:text="${file.nome}"> FILE_ </span>
+  
+                  </dt>
+                  <dd class="fileDescription">
+                        <span th:if="${file.description}" th:text="${file.description}">Description</span>
+                        <span th:if="${file.description eq null}"> Nenhuma descricao foi adicionada para esse file!</span>
+                  </dd>
+            </dl>
+      </div>
+      <div th:unless="${#lists.isEmpty(dirs)}">
+            <dl th:each="dir : ${dirs}">
+                  <dt class="bookHeadline">
+                        <span th:text="${dir.nome}"> DIR_ </span>
+  
+                  </dt>
+                  <dd class="dirDescription">
+                        <span th:if="${dir.description}" th:text="${dir.description}">Description</span>
+                        <span th:if="${dir.description eq null}"> Nenhuma descricao foi adicionada para esse dir!</span>
+                  </dd>
+            </dl>
+      </div>
+      <hr />
+</body>
+</html>
