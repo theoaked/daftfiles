@@ -63,7 +63,7 @@ public class FilesController {
 			}
 			System.out.println("New req: " + dir);
 			dir = dir.replace("+", "/");
-			File folder = new File("C:\\" + dir);
+			File folder = new File("\\" + dir);
 			System.out.println("Accessing " + folder.getPath());
 			File[] listOfFiles = folder.listFiles();
 			ArrayList<DaftFile> files = new ArrayList<>();
