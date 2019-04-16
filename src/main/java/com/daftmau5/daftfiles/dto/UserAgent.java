@@ -96,4 +96,10 @@ public class UserAgent {
 		this.device = device;
 	}
 
+	@Override
+	public String toString() {
+		return "UserAgent [id=" + id + ", tracking_id=" + tracking_id + ", browser_type=" + browser_type
+				+ ", browser_name=" + browser_name + ", browser_version=" + browser_version + ", os_name=" + os_name
+				+ ", os_producer=" + os_producer + ", os_version=" + os_version + ", device=" + device + "]";
+	}
 }

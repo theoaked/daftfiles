@@ -93,6 +93,7 @@ public class FilesController {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/downloadFile/{file}")
 	public <ReadableUserAgent> ResponseEntity<Resource> downloadFile(@PathVariable("file") String file, HttpServletRequest request, @RequestHeader(value = "User-Agent") String userAgent) {
 		file = file.replace("+", "/");
@@ -105,7 +106,7 @@ public class FilesController {
 						agent.getOperatingSystem().getVersionNumber().toVersionString(),
 						agent.getDeviceCategory().getName());
 		
-		
+		System.out.println(usrA.toString());
 		
 		// Try to determine file's content type
 		String contentType = null;
