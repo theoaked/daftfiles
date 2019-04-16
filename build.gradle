@@ -22,7 +22,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/net.sf.uadetector/uadetector-resources
 	compile group: 'net.sf.uadetector', name: 'uadetector-resources', version: '2014.10'
 
-	testCompile group: 'com.h2database', name: 'h2', version: '1.4.197'
+	compile group: 'com.h2database', name: 'h2', version: '1.4.197'
 	
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

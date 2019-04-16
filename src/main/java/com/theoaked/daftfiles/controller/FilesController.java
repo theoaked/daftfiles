@@ -59,11 +59,11 @@ public class FilesController {
 					}
 				}
 			} else {
-				parentDir = "//";
+				parentDir = "+";
 			}
 			System.out.println("New req: " + dir);
 			dir = dir.replace("+", "/");
-			File folder = new File("\\" + dir);
+			File folder = new File("/" + dir);
 			System.out.println("Accessing " + folder.getPath());
 			File[] listOfFiles = folder.listFiles();
 			ArrayList<DaftFile> files = new ArrayList<>();
