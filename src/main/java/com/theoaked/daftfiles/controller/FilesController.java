@@ -45,6 +45,7 @@ public class FilesController {
 
 	@RequestMapping(value = "/{dir}", method = RequestMethod.GET)
 	public String listFiles(@PathVariable("dir") String dir, Model model) {
+		System.out.println("Here");
 		try {
 			final String reqDir = dir;
 			String parentDir = reqDir;

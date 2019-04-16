@@ -8,9 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan(basePackages = { "com.daftmau5.daftfiles.dto" })
-@EnableJpaRepositories(basePackages = { "com.daftmau5.daftfiles.repository" })
-@ComponentScan(basePackages = {"com.daftmau5.daftfiles"})
+@EntityScan(basePackages = { "com.theoaked.daftfiles.dto" })
+@EnableJpaRepositories(basePackages = { "com.theoaked.daftfiles.repository" })
+@ComponentScan(basePackages = {"com.theoaked.daftfiles"})
 public class DaftfilesApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
