@@ -1,37 +1,51 @@
 <html>
 <head>
-<title>Reading List</title>
+<style>
+footer{
+  font-family:'Times New Roman';
+}
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 600px;
+}
+
+td, th {
+  font-family:'Times New Roman';
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+</style>
+<title>DaftFiles</title>
 </head>
 <body>
-      <h2>Lista de files</h2>
-      <div>
-      		<dl>
-                  <dt class="bookHeadline">
-  						<a th:href="${parentDir}">Back...</a>
-                  </dt>
-            </dl>
-      </div>
-      <div th:unless="${#lists.isEmpty(dirs)}">
-      		<dl>
-                  <dt class="bookHeadline">
-  						<a th:href="${parentDir}">Back...</a>
-                  </dt>
-            </dl>
-            <dl th:each="dir : ${dirs}">
-                  <dt class="bookHeadline">
-                        <span th:text="${dir.nome}"> DIR_ </span>
-  						<a th:href="${dir.link}">Visit</a>
-                  </dt>
-            </dl>
-      </div>
-      <div th:unless="${#lists.isEmpty(files)}">
-            <dl th:each="file : ${files}">
-                  <dt class="bookHeadline">
-                        <span th:text="${file.nome}"> FILE_ </span>
-  						<a th:href="${file.link}">Download</a>
-                  </dt>
-            </dl>
-      </div>
-      <hr />
+	<h2>DaftFiles 0.3 alpha_test</h2>
+	<table>
+		<tr style="background-color: #cccccc;">
+			<th>Name</th>
+			<th>Action</th>
+		</tr>
+    	<tr style="background-color: #cccccc;">
+			<td><i>Parent Directory</i></td>
+			<td><a th:href="${parentDir}"><b>Back...</b></a></td>
+    	</tr>
+    	
+		<tr th:each="dir : ${dirs}">
+			<td th:text="${dir.nome}"> DIR_ </td>
+			<td><a th:href="${dir.link}">Visit</a></td>
+		</tr>
+		<tr th:each="file : ${files}">
+			<td th:text="${file.nome}"> FILE_ </td>
+			<td><a th:href="${file.link}">Download</a></td>
+		</tr>
+	</table>
+	<br><br><br><br>
+	<footer>
+			<p><b><i>DaftFiles</i></b></p>
+  			<p>Eduardo Carvalho</p>
+  			<p><a href="mailto:eduardo.sc@protonmail.com">eduardo.sc@protonmail.com</a></p>
+  			<p><a href="https://github.com/daftmau5/daftfiles">Source Code</a></p>
+	</footer>
 </body>
 </html>

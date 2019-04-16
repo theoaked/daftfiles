@@ -14,12 +14,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.daftmau5.daftfiles.dto.DaftFile;
 import com.daftmau5.daftfiles.dto.Directory;
+import com.daftmau5.daftfiles.dto.UserAgent;
+import com.daftmau5.daftfiles.factory.UserAgentFactory;
 import com.daftmau5.daftfiles.service.FileStorageService;
+
+import net.sf.uadetector.UserAgentStringParser;
+import net.sf.uadetector.service.UADetectorServiceFactory;
 
 @Controller
 @RequestMapping("/")
@@ -27,6 +33,11 @@ public class FilesController {
 
 	@Autowired
 	private FileStorageService fileStorageService;
+	
+	@Autowired
+	private UserAgentFactory userAgentFactory;
+
+	public static UserAgentStringParser parser = UADetectorServiceFactory.getResourceModuleParser();
 
 	@Autowired
 	public FilesController() {
@@ -83,8 +94,19 @@ public class FilesController {
 	}
 
 	@RequestMapping("/downloadFile/{file}")
-	public ResponseEntity<Resource> downloadFile(@PathVariable("file") String file, HttpServletRequest request) {
+	public <ReadableUserAgent> ResponseEntity<Resource> downloadFile(@PathVariable("file") String file, HttpServletRequest request, @RequestHeader(value = "User-Agent") String userAgent) {
 		file = file.replace("+", "/");
+		
+		net.sf.uadetector.ReadableUserAgent agent = parser.parse(userAgent);
+
+		UserAgent usrA	= userAgentFactory.factoryTrackingSD(agent.getName(), agent.getType().getName(),
+						agent.getVersionNumber().toVersionString(), agent.getOperatingSystem().getName(),
+						agent.getOperatingSystem().getProducer(),
+						agent.getOperatingSystem().getVersionNumber().toVersionString(),
+						agent.getDeviceCategory().getName());
+		
+		
+		
 		// Try to determine file's content type
 		String contentType = null;
 		try {
