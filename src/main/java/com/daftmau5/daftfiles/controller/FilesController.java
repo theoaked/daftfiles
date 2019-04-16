@@ -35,6 +35,21 @@ public class FilesController {
 	@RequestMapping(value = "/{dir}", method = RequestMethod.GET)
 	public String listFiles(@PathVariable("dir") String dir, Model model) {
 		try {
+			final String reqDir = dir;
+			String parentDir = reqDir;
+			boolean isParent = false;
+			if (parentDir.contains("+")) {
+				while (!isParent) {
+					if (!parentDir.endsWith("+")) {
+						parentDir = parentDir.substring(0, parentDir.length() - 1);
+					} else {
+						parentDir = parentDir.substring(0, parentDir.length() - 1);
+						isParent = true;
+					}
+				}
+			} else {
+				parentDir = "//";
+			}
 			System.out.println("New req: " + dir);
 			dir = dir.replace("+", "/");
 			File folder = new File("C:\\" + dir);
@@ -42,28 +57,27 @@ public class FilesController {
 			File[] listOfFiles = folder.listFiles();
 			ArrayList<DaftFile> files = new ArrayList<>();
 			ArrayList<Directory> directories = new ArrayList<>();
-
-			if (listOfFiles == null) {
-				return "getOut";
-			} else {
+			if (listOfFiles != null) {
 				for (int i = 0; i < listOfFiles.length; i++) {
 					if (listOfFiles[i].isFile()) {
 						DaftFile daftFile = new DaftFile();
 						daftFile.setNome(listOfFiles[i].getName());
+						daftFile.setLink("/downloadFile/" + reqDir + "+" + listOfFiles[i].getName());
 						files.add(daftFile);
 					} else if (listOfFiles[i].isDirectory()) {
 						Directory directory = new Directory();
 						directory.setNome(listOfFiles[i].getName());
+						directory.setLink(reqDir + "+" + listOfFiles[i].getName());
 						directories.add(directory);
 					}
 				}
-
-				model.addAttribute("actualDir", dir);
-				model.addAttribute("dirs", directories);
-				model.addAttribute("files", files);
-				return "listFiles";
 			}
+			model.addAttribute("parentDir", parentDir);
+			model.addAttribute("dirs", directories);
+			model.addAttribute("files", files);
+			return "listFiles";
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "shitGetOut";
 		}
 	}

@@ -4,24 +4,32 @@
 </head>
 <body>
       <h2>Lista de files</h2>
-      <div th:unless="${#lists.isEmpty(files)}">
-            <dl th:each="file : ${files}">
+      <div>
+      		<dl>
                   <dt class="bookHeadline">
-                        <span th:text="${file.nome}"> FILE_ </span>
-  						<a href="${actualDir}">Download</a>
+  						<a th:href="${parentDir}">Back...</a>
                   </dt>
             </dl>
       </div>
       <div th:unless="${#lists.isEmpty(dirs)}">
+      		<dl>
+                  <dt class="bookHeadline">
+  						<a th:href="${parentDir}">Back...</a>
+                  </dt>
+            </dl>
             <dl th:each="dir : ${dirs}">
                   <dt class="bookHeadline">
                         <span th:text="${dir.nome}"> DIR_ </span>
-  
+  						<a th:href="${dir.link}">Visit</a>
                   </dt>
-                  <dd class="dirDescription">
-                        <span th:if="${dir.description}" th:text="${dir.description}">Description</span>
-                        <span th:if="${dir.description eq null}"> Nenhuma descricao foi adicionada para esse dir!</span>
-                  </dd>
+            </dl>
+      </div>
+      <div th:unless="${#lists.isEmpty(files)}">
+            <dl th:each="file : ${files}">
+                  <dt class="bookHeadline">
+                        <span th:text="${file.nome}"> FILE_ </span>
+  						<a th:href="${file.link}">Download</a>
+                  </dt>
             </dl>
       </div>
       <hr />

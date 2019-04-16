@@ -9,6 +9,15 @@ public class Directory {
 	int id;
 	String nome;
 	String description;
+	String link;
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
 
 	public int getId() {
 		return id;
