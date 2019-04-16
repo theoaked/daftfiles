@@ -1,4 +1,4 @@
-package com.daftmau5.daftfiles.controller;
+package com.theoaked.daftfiles.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.daftmau5.daftfiles.dto.DaftFile;
-import com.daftmau5.daftfiles.dto.Directory;
-import com.daftmau5.daftfiles.dto.UserAgent;
-import com.daftmau5.daftfiles.factory.UserAgentFactory;
-import com.daftmau5.daftfiles.service.FileStorageService;
+import com.theoaked.daftfiles.dto.DaftFile;
+import com.theoaked.daftfiles.dto.Directory;
+import com.theoaked.daftfiles.dto.UserAgent;
+import com.theoaked.daftfiles.factory.UserAgentFactory;
+import com.theoaked.daftfiles.service.FileStorageService;
 
 import net.sf.uadetector.UserAgentStringParser;
 import net.sf.uadetector.service.UADetectorServiceFactory;

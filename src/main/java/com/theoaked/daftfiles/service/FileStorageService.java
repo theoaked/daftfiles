@@ -1,4 +1,4 @@
-package com.daftmau5.daftfiles.service;
+package com.theoaked.daftfiles.service;
 
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;

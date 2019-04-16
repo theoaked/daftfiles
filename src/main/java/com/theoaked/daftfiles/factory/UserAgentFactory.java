@@ -1,8 +1,8 @@
-package com.daftmau5.daftfiles.factory;
+package com.theoaked.daftfiles.factory;
 
 import org.springframework.stereotype.Component;
 
-import com.daftmau5.daftfiles.dto.UserAgent;
+import com.theoaked.daftfiles.dto.UserAgent;
 
 @Component("userAgentFactory")
 public class UserAgentFactory {

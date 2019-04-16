@@ -1,4 +1,4 @@
-package com.daftmau5.daftfiles.dto;
+package com.theoaked.daftfiles.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

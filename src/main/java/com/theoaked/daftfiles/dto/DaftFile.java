@@ -1,10 +1,11 @@
-package com.daftmau5.daftfiles.dto;
+package com.theoaked.daftfiles.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Directory {
+public class DaftFile {
+	// just a file but cooler
 	@Id
 	int id;
 	String nome;
@@ -42,5 +43,4 @@ public class Directory {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
 }
