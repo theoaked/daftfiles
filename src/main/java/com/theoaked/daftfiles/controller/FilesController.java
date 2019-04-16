@@ -33,7 +33,7 @@ public class FilesController {
 
 	@Autowired
 	private FileStorageService fileStorageService;
-	
+
 	@Autowired
 	private UserAgentFactory userAgentFactory;
 
@@ -45,7 +45,6 @@ public class FilesController {
 
 	@RequestMapping(value = "/{dir}", method = RequestMethod.GET)
 	public String listFiles(@PathVariable("dir") String dir, Model model) {
-		System.out.println("Here");
 		try {
 			final String reqDir = dir;
 			String parentDir = reqDir;
@@ -87,7 +86,11 @@ public class FilesController {
 			model.addAttribute("parentDir", parentDir);
 			model.addAttribute("dirs", directories);
 			model.addAttribute("files", files);
-			return "listFiles";
+			if (dir.endsWith("secret")) {
+				return "getOut";
+			} else {
+				return "listFiles";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "shitGetOut";
@@ -96,19 +99,19 @@ public class FilesController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/downloadFile/{file}")
-	public <ReadableUserAgent> ResponseEntity<Resource> downloadFile(@PathVariable("file") String file, HttpServletRequest request, @RequestHeader(value = "User-Agent") String userAgent) {
+	public <ReadableUserAgent> ResponseEntity<Resource> downloadFile(@PathVariable("file") String file,
+			HttpServletRequest request, @RequestHeader(value = "User-Agent") String userAgent) {
 		file = file.replace("+", "/");
-		
+
 		net.sf.uadetector.ReadableUserAgent agent = parser.parse(userAgent);
 
-		UserAgent usrA	= userAgentFactory.factoryTrackingSD(agent.getName(), agent.getType().getName(),
-						agent.getVersionNumber().toVersionString(), agent.getOperatingSystem().getName(),
-						agent.getOperatingSystem().getProducer(),
-						agent.getOperatingSystem().getVersionNumber().toVersionString(),
-						agent.getDeviceCategory().getName());
-		
-		System.out.println(usrA.toString());
-		
+		UserAgent usrA = userAgentFactory.factoryTrackingSD(agent.getName(), agent.getType().getName(),
+				agent.getVersionNumber().toVersionString(), agent.getOperatingSystem().getName(),
+				agent.getOperatingSystem().getProducer(),
+				agent.getOperatingSystem().getVersionNumber().toVersionString(), agent.getDeviceCategory().getName());
+
+		System.out.println("New download request (" + usrA.getOs_name() + "): " + file);
+
 		// Try to determine file's content type
 		String contentType = null;
 		try {
