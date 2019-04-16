@@ -1,45 +1,46 @@
 <html>
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <style>
 footer{
   font-family:'Times New Roman';
-}
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 600px;
-}
-
-td, th {
-  font-family:'Times New Roman';
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
 }
 </style>
 <title>DaftFiles</title>
 </head>
 <body>
-	<h2>DaftFiles 0.3 alpha_test</h2>
-	<table>
-		<tr style="background-color: #cccccc;">
-			<th>Name</th>
-			<th>Action</th>
-		</tr>
-    	<tr style="background-color: #cccccc;">
-			<td><i>Parent Directory</i></td>
-			<td><a th:href="${parentDir}"><b>Back...</b></a></td>
-    	</tr>
-    	
-		<tr th:each="dir : ${dirs}">
-			<td th:text="${dir.nome}"> DIR_ </td>
-			<td><a th:href="${dir.link}">Visit</a></td>
-		</tr>
-		<tr th:each="file : ${files}">
-			<td th:text="${file.nome}"> FILE_ </td>
-			<td><a th:href="${file.link}">Download</a></td>
-		</tr>
-	</table>
+	<div class="card" style="width: 900px; padding-left: 20px; padding-right: 20px; padding-top: 20px; border-radius: 10px; ">
+	  	<div class="card-header">
+	    	DaftFiles 0.3 alpha_test
+	  	</div>
+	  	<div class="card-body">
+			<table class="table table-striped table-hover table-dark" style="margin: auto; width: 80%; padding: 10px;">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+		    		<tr>
+						<td><i>Parent Directory</i></td>
+						<td><a th:href="${parentDir}"><b>Back...</b></a></td>
+		    		</tr>
+					<tr th:each="dir : ${dirs}">
+						<td th:text="${dir.nome}"> DIR_ </td>
+						<td><a th:href="${dir.link}">Visit</a></td>
+					</tr>
+					<tr th:each="file : ${files}">
+						<td th:text="${file.nome}"> FILE_ </td>
+						<td><a th:href="${file.link}">Download</a></td>
+					</tr>
+				</tbody>
+			</table>
+	  	</div>
+	</div>
 	<br><br><br><br>
 	<footer>
 			<p><b><i>DaftFiles</i></b></p>
