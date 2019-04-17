@@ -27,10 +27,9 @@ public class DaftfilesApplication extends SpringBootServletInitializer {
 		String[] usersArr = users.split(";");
 		for (int i = 0; i < usersArr.length; i++) {
 			User user = new User();
-			String[] auxUs = usersArr[i].split("|");
+			String[] auxUs = usersArr[i].split("#");
 			user.setLogin(auxUs[0]);
 			user.setSenha(auxUs[1]);
-			System.out.println(user.getLogin()+" - "+user.getSenha());
 			if (user.getLogin().equals(login) && user.getSenha().equals(senha)) {
 				return user;
 			}

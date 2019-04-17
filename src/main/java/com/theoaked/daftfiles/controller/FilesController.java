@@ -56,9 +56,7 @@ public class FilesController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		try {
-			if (!(user == null)) {
-				response.sendRedirect("/");
-			} else {
+			if (user == null) {
 				response.sendRedirect("/login");
 			}
 		} catch (Exception e) {
@@ -125,9 +123,7 @@ public class FilesController {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		try {
-			if (!(user == null)) {
-				response.sendRedirect("/");
-			} else {
+			if (user == null) {
 				response.sendRedirect("/login");
 			}
 		} catch (Exception e) {
@@ -179,8 +175,8 @@ public class FilesController {
 				} else {
 					session.setAttribute("user", ap.checkLogin(login, senha));
 					User u = (User) session.getAttribute("user");
-					System.out.println(u.getLogin());
-					response.sendRedirect("/");
+					System.out.println("New user log in: "+u.getLogin());
+					response.sendRedirect("/tmp");
 				}
 			}
 		} catch (Exception e) {
