@@ -8,27 +8,57 @@
 footer{
   font-family:'Times New Roman';
 }
+header{
+	font-family:'Times New Roman';
+}
+body {
+    position: relative;
+}
+#allBody{
+	width: 500px;           
+    height:330px;          
+    position: absolute;
+    width: 50%; 
+  	height: 50%;
+    top: 0;
+    left: 0;
+    right:0;
+    bottom:0;
+    margin:auto;
+ }
+ 
 </style>
 <title>DaftFiles</title>
 </head>
 <body>
-	<div class="card" style="width: 900px; padding-left: 20px; padding-right: 20px; padding-top: 20px; border-radius: 10px; ">
-	  	<div class="card-header">
-	    	DaftFiles 0.3 alpha_test
-	  	</div>
-	  	<div class="card-body">
-			<form id="formLogin" action="authenticate">       
-				<input type="text" class="form-control" name="login" id="login" placeholder="login" required="" autofocus="" />
-				<input type="password" class="form-control" name="senha" id="senha" placeholder="Password" required=""/> 
-				<hr>
-				<button type="submit" name="cmd" value="login">Login</button>
-			</form>	
-			<footer>
-				<div>Open Source -
-      				<a href="https://github.com/daftmau5/daftfiles"> theoaked</a>
-    			</div>
-			</footer>
-	  	</div>
+	<div id="allBody" align="center" valign="center">	
+		<div class="card text-white bg-dark" style="padding-left: 20px; padding-right: 20px; padding-top: 20px; border-radius: 10px; ">
+			<div>
+			  	<header class="header" style="margin: auto; width: 80%; padding: 10px;">
+			  	<div class="container">
+			    	<span class="text-muted">DaftFiles 0.3 alpha_test</span>
+			    </div>
+			  	</header>
+			 </div>
+		  	<div id="divFormLogin" class="card-body text-white bg-dark" style="width:300px; height:200px;">
+				<form id="formLogin" action="authenticate">       
+					<input type="text" class="form-control" name="login" id="login" placeholder="login" required="" autofocus="" />
+					<br/>
+					<input type="password" class="form-control" name="senha" id="senha" placeholder="Password" required=""/> 
+					<hr>
+					<button type="submit" name="cmd" value="login">Login</button>
+				</form>	
+		  	</div>
+		  	<div>
+				<footer class="footer" style="margin: auto; width: 80%; padding: 10px;">
+					<div class="container">
+						<span class="text-muted">Open Source -
+		      				<a href="https://github.com/theoaked/daftfiles" style="text-align: center;"> theoaked</a>
+		    			</span>
+			   		</div>
+				</footer>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
