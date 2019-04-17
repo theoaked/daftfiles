@@ -1,0 +1,7 @@
+{"properties": [
+  {
+    "name": "users.credentials",
+    "type": "java.lang.String",
+    "description": "A description for 'users.credentials'"
+  }
+]}
