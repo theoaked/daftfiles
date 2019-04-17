@@ -6,48 +6,57 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <style>
 footer{
-  font-family:'Times New Roman';
+ 	font-family:'Times New Roman';
+}
+header{
+	font-family:'Times New Roman';
 }
 </style>
 <title>DaftFiles</title>
 </head>
 <body>
-	<div class="card" style="width: 900px; padding-left: 20px; padding-right: 20px; padding-top: 20px; border-radius: 10px; ">
-	  	<div class="card-header">
-	    	DaftFiles 0.3 alpha_test
-	  	</div>
-	  	<div class="card-body">
-			<table class="table table-striped table-hover table-dark" style="margin: auto; width: 80%; padding: 10px;">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-		    		<tr>
-						<td><i>Parent Directory</i></td>
-						<td><a th:href="${parentDir}"><b>Back...</b></a></td>
-		    		</tr>
-					<tr th:each="dir : ${dirs}">
-						<td th:text="${dir.nome}"> DIR_ </td>
-						<td><a th:href="${dir.link}">Visit</a></td>
-					</tr>
-					<tr th:each="file : ${files}">
-						<td th:text="${file.nome}"> FILE_ </td>
-						<td><a th:href="${file.link}">Download</a></td>
-					</tr>
-				</tbody>
-			</table>
-			<br><br><br><br>
-			<footer class="footer" style="margin: auto; width: 80%; padding: 10px;">
-				<div class="container">
-					<span class="text-muted">Open Source -
-      					<a href="https://github.com/theoaked/daftfiles" style="text-align: center;"> theoaked</a>
-      				</span>
-    			</div>
-			</footer>
-	  	</div>
-	</div>
+	<div align="center">
+		<div class="card" style="width: 900px; padding-left: 20px; padding-right: 20px; padding-top: 20px; border-radius: 10px;">
+		  	<div class="card-header" style="width: 850px;">
+			  	<header class="header" style="margin: auto; width: 80%; padding: 10px;">
+			    	DaftFiles 0.3 alpha_test
+			    </header>	
+		  	</div>
+		  	<div class="card-body">
+				<table class="table table-striped table-hover table-dark" style="margin: auto; width: 80%; padding: 10px;">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+			    		<tr>
+							<td><i>Parent Directory</i></td>
+							<td><a th:href="${parentDir}"><b>Back...</b></a></td>
+			    		</tr>
+						<tr th:each="dir : ${dirs}">
+							<td th:text="${dir.nome}"> DIR_ </td>
+							<td><a th:href="${dir.link}">Visit</a></td>
+						</tr>
+						<tr th:each="file : ${files}">
+							<td th:text="${file.nome}"> FILE_ </td>
+							<td><a th:href="${file.link}">Download</a></td>
+						</tr>
+					</tbody>
+				</table>
+				<br><br><br><br>
+				<div class="card-footer">
+					<footer class="footer" style="margin: auto; width: 80%; padding: 10px;">
+						<div class="container">
+							<span class="text-muted">Open Source -
+		      					<a href="https://github.com/theoaked/daftfiles" style="text-align: center;"> theoaked</a>
+		      				</span>
+			    		</div>
+					</footer>
+			  	</div>
+			</div>
+		</div>
+	</div>	
 </body>
 </html>
