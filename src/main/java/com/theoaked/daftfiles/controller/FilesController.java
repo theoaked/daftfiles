@@ -16,9 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.theoaked.daftfiles.DaftfilesApplication;
 import com.theoaked.daftfiles.dto.DaftFile;
@@ -26,6 +30,7 @@ import com.theoaked.daftfiles.dto.Directory;
 import com.theoaked.daftfiles.dto.User;
 import com.theoaked.daftfiles.dto.UserAgent;
 import com.theoaked.daftfiles.factory.UserAgentFactory;
+import com.theoaked.daftfiles.payload.UploadFileResponse;
 import com.theoaked.daftfiles.service.FileStorageService;
 
 import net.sf.uadetector.UserAgentStringParser;
@@ -188,4 +193,22 @@ public class FilesController {
 	public String login() {
 		return "login";
 	}
+	
+	@RequestMapping("/uploadFile")
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+        String fileName;
+		try {
+			fileName = fileStorageService.storeFile(file);
+			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+	                .path("/downloadFile/")
+	                .path(fileName)
+	                .toUriString();
+
+	        return new UploadFileResponse(fileName, fileDownloadUri,
+	                file.getContentType(), file.getSize());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+    }
 }
