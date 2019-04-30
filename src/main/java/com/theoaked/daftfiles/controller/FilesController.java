@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -35,6 +37,8 @@ import net.sf.uadetector.service.UADetectorServiceFactory;
 @RequestMapping("/")
 public class FilesController {
 
+	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private FileStorageService fileStorageService;
 
@@ -52,16 +56,32 @@ public class FilesController {
 
 	@RequestMapping(value = "/{dir}", method = RequestMethod.GET)
 	public String listFiles(@PathVariable("dir") String dir, Model model, HttpServletResponse response,
-			HttpServletRequest request) {
+			HttpServletRequest request, @RequestHeader(value = "User-Agent") String userAgent) {
+
+		// get the user's IP address
+		String ip = request.getHeader("X-FORWARDED-FOR");
+		if (ip == null) {
+			ip = request.getRemoteAddr();
+		}
+		// get the user-agent data from http-request
+		net.sf.uadetector.ReadableUserAgent agent = parser.parse(userAgent);
+		// merge user-agent data into an object
+		UserAgent usrA = userAgentFactory.factoryTrackingSD(agent.getName(), agent.getType().getName(),
+				agent.getVersionNumber().toVersionString(), agent.getOperatingSystem().getName(),
+				agent.getOperatingSystem().getProducer(),
+				agent.getOperatingSystem().getVersionNumber().toVersionString(), agent.getDeviceCategory().getName());
+
+		// get the actual session for login attributes validation
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		try {
 			if (user == null) {
+				logger.warn("[NAVIGATION][" + ip + "] Invalid authentication.");
 				response.sendRedirect("/login");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Couldn't auth");
+			logger.error("[NAVIGATION][" + ip + "] Could not authenticate - " + e.getMessage());
 		}
 		try {
 			final String reqDir = dir;
@@ -79,10 +99,10 @@ public class FilesController {
 			} else {
 				parentDir = "+";
 			}
-			System.out.println("New req: " + dir);
 			dir = dir.replace("+", "/");
 			File folder = new File("/" + dir);
-			System.out.println("Accessing " + folder.getPath());
+			logger.info("[NAVIGATION][" + ip + "]" + folder.getPath() + " - " + usrA.getOs_name() + "_"
+					+ usrA.getBrowser_name());
 			File[] listOfFiles = folder.listFiles();
 			ArrayList<DaftFile> files = new ArrayList<>();
 			ArrayList<Directory> directories = new ArrayList<>();
@@ -111,6 +131,8 @@ public class FilesController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			logger.error("[NAVIGATION][" + ip + "] Error - " + e.getMessage() + " - " + usrA.getOs_name() + "_"
+					+ usrA.getBrowser_name());
 			return "shitGetOut";
 		}
 	}
@@ -120,15 +142,22 @@ public class FilesController {
 	public <ReadableUserAgent> ResponseEntity<Resource> downloadFile(@PathVariable("file") String file,
 			HttpServletRequest request, @RequestHeader(value = "User-Agent") String userAgent,
 			HttpServletResponse response) {
+
+		// get the user's IP address
+		String ip = request.getHeader("X-FORWARDED-FOR");
+		if (ip == null) {
+			ip = request.getRemoteAddr();
+		}
+
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		try {
 			if (user == null) {
+				logger.warn("[DOWNLOAD][" + ip + "] Invalid authentication.");
 				response.sendRedirect("/login");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Couldn't auth");
+			logger.warn("[DOWNLOAD][" + ip + "] Could not authenticate - " + e.getMessage());
 		}
 		file = file.replace("+", "/");
 
@@ -139,7 +168,7 @@ public class FilesController {
 				agent.getOperatingSystem().getProducer(),
 				agent.getOperatingSystem().getVersionNumber().toVersionString(), agent.getDeviceCategory().getName());
 
-		System.out.println("New download request (" + usrA.getOs_name() + "): " + file);
+		logger.info("[DOWNLOAD][" + ip + "] " + file + " - " + usrA.getOs_name() + "_" + usrA.getBrowser_name());
 
 		// Try to determine file's content type
 		String contentType = null;
@@ -156,7 +185,8 @@ public class FilesController {
 					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 					.body(resource);
 		} catch (IOException ex) {
-			System.out.println("Could not determine file type.");
+			logger.info("[DOWNLOAD][" + ip + "] Error - " + ex.getMessage() + " - " + usrA.getOs_name() + "_"
+					+ usrA.getBrowser_name());
 			return (ResponseEntity<Resource>) ResponseEntity.badRequest();
 		}
 	}
@@ -167,6 +197,12 @@ public class FilesController {
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 
+		// get the user's IP address
+		String ip = request.getHeader("X-FORWARDED-FOR");
+		if (ip == null) {
+			ip = request.getRemoteAddr();
+		}
+
 		try {
 			if ("login".equals(cmd)) {
 				HttpSession session = request.getSession();
@@ -175,12 +211,12 @@ public class FilesController {
 				} else {
 					session.setAttribute("user", ap.checkLogin(login, senha));
 					User u = (User) session.getAttribute("user");
-					System.out.println("New user log in: "+u.getLogin());
-					response.sendRedirect("/tmp");
+					logger.info("[LOGIN][" + ip + "] New login - " + u.getLogin());
+					response.sendRedirect("/+");
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info("[LOGIN] Could not login - " + e.getMessage());
 		}
 	}
 
